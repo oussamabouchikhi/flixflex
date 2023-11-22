@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
+import { GetMovieDto } from './dto/get-movie.dto';
 
 @Injectable()
 export class UsersService {
@@ -102,5 +103,54 @@ export class UsersService {
     hashedPassword: string,
   ): Promise<boolean> {
     return await bcrypt.compare(plainPassword, hashedPassword);
+  }
+
+  /**
+   * Retrieves users's favourite movies
+   * @param {string} userEmail - The email of the user.
+   * @returns {Promise<GetMovieDto[]>} the list of the users's favourite movies
+   */
+  async getFavorites(userEmail: string): Promise<GetMovieDto[]> {
+    const user = await this.userModel
+      .findOne({ email: userEmail })
+      .populate('favorites');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user.favorites;
+  }
+
+  /**
+   * Adds a movie to the users's favourite movies
+   * @param {string} userEmail - The email of the user.
+   * @returns {Promise<void>}
+   */
+  async addToFavorites(userEmail: string, movie: GetMovieDto): Promise<void> {
+    const user = await this.userModel.findOne({ email: userEmail });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!user.favorites.some((favMovie) => favMovie.id === movie.id)) {
+      user.favorites.push(movie);
+      await user.save();
+    }
+  }
+
+  /**
+   * Removes a movie to the users's favourite movies
+   * @param {string} userEmail - The email of the user.
+   * @returns {Promise<void>}
+   */
+  async removeFromFavorites(userEmail: string, movieId: number): Promise<void> {
+    const user = await this.userModel.findOne({ email: userEmail });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    user.favorites = user.favorites.filter(
+      (favMovie) => favMovie.id !== movieId,
+    );
+    await user.save();
   }
 }
