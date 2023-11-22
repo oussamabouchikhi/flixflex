@@ -1,73 +1,122 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# FlixFlex
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+FlixFlex is a movie and series tracking application that allows users to discover, view details, and manage their favorite movies and series.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Movies and Series](#movies-and-series)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [Swagger Documentation](#swagger-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- [NestJS](https://nestjs.com/)
+- [MongoDB](https://www.mongodb.com/) (or provide your own database)
 
 ## Installation
 
-```bash
-$ pnpm install
-```
-
-## Running the app
+1. Clone the repository:
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+git clone https://github.com/oussamabouchikhi/flixflex.git
 ```
 
-## Test
+2. Install dependencies:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+cd flixflex
+pnpm install
 ```
 
-## Support
+3. Rename the `example.env.development` file to `.env.development` and modify the environment variables:
+   > Note: you need to create a MongoDB atlas and create an account TMDB website
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- [MongoDB Atlas](https://www.mongodb.com/atlas/database)
+- [TMDB](https://www.themoviedb.org/)
 
-## Stay in touch
+```env
+MONGODB_URI=YOUR_MONGODB_URI
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+JWT_SECRET=YOUR_JWT_SECRET
+ENCRYPT_JWT_SECRET=YOUR_JWT_ENCRIPTING_PASS
+JWT_EXPIRATION=30m
+
+TMDB_API_KEY=YOUR_TMDB_API_KEY
+TMDB_READ_ACCESS_TOKEN=YOUR_TMDB_READ_ACCESS_TOKEN
+```
+
+## Usage
+
+The base endpont is
+
+> http://localhost:3000/api/v1/
+
+### Authentication
+
+To use authentication features, you need to register and login. Use the following API endpoints:
+
+> POST /auth/register: Register a new user.
+> POST /auth/login: Login with a registered user.
+
+### Movies and Series
+
+Explore and manage movies and series with the following API endpoints:
+
+> GET /movies: Get a list of all movies.
+
+> GET /movies/top: Get the top movies.
+
+> GET /movies/:id: Get details of a specific movie.
+
+> POST /movies/search: Search for movies.
+
+> POST /movies/add-to-favorites/:id: Add a movie to your favorites.
+
+> DELETE /movies/remove-from-favorites/:id: Remove a movie from your favorites.
+
+> GET /movies/favorites: Get your list of favorite movies.
+
+## API Endpoints
+
+For a complete list of API endpoints and their descriptions, refer to the Swagger Documentation.
+
+## Testing
+
+Run the tests using:
+
+```bash
+pnpm run test
+```
+
+## Swagger Documentation
+
+Access Swagger documentation to explore and test API endpoints:
+
+## Start the application
+
+```bash
+pnpm run start:dev
+```
+
+## Visit Swagger documentation in your browser
+
+> http://localhost:3000/api/v1/swagger
+
+## Contributing
+
+Feel free to contribute to the development of FlixFlex. Please follow the [Contribution Guidelines](/CONTRIBUTING.md).
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License - see the LICENSE file for details.
