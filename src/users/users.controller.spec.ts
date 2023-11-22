@@ -11,35 +11,38 @@ describe('UsersController', () => {
 
   beforeEach(async () => {
     fakeUsersService = {
-      //   findAll: () => {
-      //     return Promise.resolve([
-      //       {
-      //         firstname: 'a',
-      //         lastname: 'a',
-      //         username: 's',
-      //         email: 'a@a.com',
-      //         password: 'ac12',
-      //       },
-      //     ]);
-      //   },
-      //   findOne: (_email: string) => {
-      //     return Promise.resolve({
-      //       firstname: 'b',
-      //       lastname: 'b',
-      //       username: 'b',
-      //       email: 'b@b.com',
-      //       password: 'ac12',
-      //     });
-      //   },
-      //   update: (_id: string, _user: Partial<User>) => {
-      //     return Promise.resolve({
-      //       firstname: 'a',
-      //       lastname: 'a',
-      //       username: 's',
-      //       email: 'a@a.com',
-      //       password: 'ac12',
-      //     });
-      //   },
+      findAll: () => {
+        return Promise.resolve([
+          {
+            firstname: 'a',
+            lastname: 'a',
+            username: 's',
+            email: 'a@a.com',
+            password: 'ac12',
+            favorites: [],
+          },
+        ]);
+      },
+      findOne: (_email: string) => {
+        return Promise.resolve({
+          firstname: 'b',
+          lastname: 'b',
+          username: 'b',
+          email: 'b@b.com',
+          password: 'ac12',
+          favorites: [],
+        });
+      },
+      update: (_id: string, _user: Partial<User>) => {
+        return Promise.resolve({
+          firstname: 'a',
+          lastname: 'a',
+          username: 's',
+          email: 'a@a.com',
+          password: 'ac12',
+          favorites: [],
+        });
+      },
       remove: (_id: string) => {
         return Promise.resolve({ statusCode: 204, message: 'Deleted...' });
       },
@@ -62,17 +65,17 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
-  //   it('(findAll) should return a list of users', async () => {
-  //     const users = await controller.findAll();
-  //     expect(users.length).toEqual(1);
-  //     expect(users[0].email).toEqual('a@a.com');
-  //   });
+  it('(findAll) should return a list of users', async () => {
+    const users = await controller.findAll();
+    expect(users.length).toEqual(1);
+    expect(users[0].email).toEqual('a@a.com');
+  });
 
-  //   it('(findOne) should return a user with the given id', async () => {
-  //     const user = await controller.findOne('b');
-  //     expect(user).toBeDefined();
-  //     expect(user.firstname).toEqual('b');
-  //   });
+  it('(findOne) should return a user with the given id', async () => {
+    const user = await controller.findOne('b');
+    expect(user).toBeDefined();
+    expect(user.firstname).toEqual('b');
+  });
 
   it('(findOne) should throw an error if user with given id is not found', async () => {
     fakeUsersService.findOne = () => null;
