@@ -6,7 +6,6 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { MoviesModule } from './movies/movies.module';
-import { SeriesModule } from './series/series.module';
 
 @Module({
   imports: [
@@ -24,7 +23,6 @@ import { SeriesModule } from './series/series.module';
     AuthModule,
     UsersModule,
     MoviesModule,
-    SeriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
